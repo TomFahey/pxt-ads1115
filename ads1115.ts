@@ -62,6 +62,31 @@ enum mode {
     Multi
 }
 
+enum comp_mode {
+    //% block="TRADITIONAL"
+    Traditional,
+    //% block="WINDOW"
+    Window
+}
+
+enum comp_latch {
+    //% block="NONLATCHING"
+    Nonlatching,
+    //% block="LATCHING"
+    Latching
+}
+
+enum comp_queue {
+    //% block="ONE_CONVERSION"
+    OneConversion,
+    //% block="TWO_CONVERSIONS"
+    TwoConversions,
+    //% block="FOUR_CONVERSIONS"
+    FourConversions,
+    //% block="DISABLE"
+    Disable
+}
+
 /**
   * ADS1115 16-Bit ADC block
   */
@@ -177,12 +202,19 @@ namespace ADS1115 {
         _DR_860SPS      // - /860 samples per Second
     ];
 
+ 
+
     // All global variables used in the library, as well as some predefined variables that serve as default values
     let adsaddress = 0x48
     let adsgain = _GAINS[0]
     let adsrate = _RATES[4]
     let adsmode = _MODE_CONTIN
     let adsgainv: number = 2
+    let adscmode = _CMODE_TRAD
+    let adsclatch = _CLAT_NONLAT
+    let adscqueue = _CQUE_NONE
+    let ads_lo_threshold: number = 0x8000
+    let ads_hi_threshold: number = 0x7FFF 
 
     /**
      * Changing the I2C address based on user input
@@ -286,6 +318,72 @@ namespace ADS1115 {
         }
     }
 
+ 
+    /**
+     * Change the comparator mode based on user input
+     */
+    //% blockId="ADS1115_SET_COMP_MODE" block="Set the comparator mode to %comp_mode"
+    //% color="#275C6B" weight=100 blockGap=8
+    //% parts=adc_ads1115 trackArgs=0
+    export function setCompMode(selection: comp_mode): void {
+        if (selection == comp_mode.Traditional) {
+            adscmode = _CMODE_TRAD
+        }
+        else if (selection ==comp_mode.Window) {
+            adscmode = _CMODE_WINDOW
+        }
+    }
+
+     /**
+     * Change the comparator latching based on user input
+     */
+    //% blockId="ADS1115_SET_COMP_LATCH" block="Set the comparator latch to %comp_latch"
+    //% color="#275C6B" weight=100 blockGap=8
+    //% parts=adc_ads1115 trackArgs=0
+    export function setCompLatch(selection: comp_latch): void {
+        if (selection == comp_latch.Nonlatching) {
+            adsclatch = _CLAT_NONLAT
+        }
+        else if (selection ==comp_mode.Window) {
+            adsclatch = _CLAT_LAT
+        }
+    }
+
+     /**
+     * Change the comparator queue based on user input
+     */
+    //% blockId="ADS1115_SET_COMP_QUEUE" block="Set the comparator queue to %comp_queue"
+    //% color="#275C6B" weight=100 blockGap=8
+    //% parts=adc_ads1115 trackArgs=0
+    export function setCompQueue(selection: comp_queue): void {
+        if (selection == comp_queue.OneConversion) {
+            adscqueue = _CQUE_1CONV
+        }
+        else if (selection == comp_queue.TwoConversions) {
+            adsqueue = _CQUE_2CONV
+        }
+        else if (selection == comp_queue.FourConversions) {
+            adsqueue = _CQUE_4CONV
+        }
+        else if (selection == comp_queue.Disable) {
+            adsqueue = _CQUE_NONE
+        }
+    }
+
+     /**
+     * Change the comparator thresholds based on user input
+     */
+    //% blockId="ADS1115_SET_COMP_THRESHOLD" block="Set the comparator thresholds to low: %low high: %high"
+    //% color="#275C6B" weight=100 blockGap=8
+    //% parts=adc_ads1115 trackArgs=0
+    export function setCompThreshold(low: number, high: number): void {
+        _write_register(_REGISTER_LOWTHRESH, low)
+        _write_register(_REGISTER_HITHRESH, high)
+    }
+        
+    
+ 
+
     // Write the required 16-bit value into the register
     function _write_register(register: number, value: number) {
         let temp: number[] = []
@@ -343,7 +441,9 @@ namespace ADS1115 {
         config |= adsgain
         config |= adsrate
         config |= adsmode
-        config |= _CQUE_NONE
+        config |= adscmode
+        config |= adsclatch
+        config |= adscqueue
         // Sending the required data to the specified register.
         _write_register(_REGISTER_CONFIG, config)
         while (!(_read_register(_REGISTER_CONFIG) & _OS_NOTBUSY))
