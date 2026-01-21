@@ -4,11 +4,18 @@
   "ADS1115.raw_to_v": "Reads any raw value (raw) either from the previously specified channel or from any other variable and converts it to voltages",
   "ADS1115.read": "Reads the specified channel of the ADS1115",
   "ADS1115.readMulti": "Reads the specified channels of the ADS1115",
+  "ADS1115.setCompThreshold": "Change the comparator low and high thresholds based on the user input",
   "ADS1115.setGain": "Change the gains based on the user input",
   "ADS1115.setMode": "Change the mode based on user input",
   "ADS1115.setRate": "Change the sample rate based on user input",
+  "ADS1115.setCompMode": "Change the comparator mode based on user input",
+  "ADS1115.setCompLatch": "Change the comparator latch mode based on user input",
+  "ADS1115.setCompQueue": "Change the comparator queue length based on user input",
   "gain": "Enumeration of gains",
   "mode": "Enumeration of modes",
   "rate": "Enumeration of sample rates",
+  "comp_mode": "Enumeration of comparator modes",
+  "comp_latch": "Enumeration of comparator latch modes",
+  "comp_queue": "Enumeration of comparator queue lengths",
   "userInI2C": "Enumeration of the I2C addresses"
 }
