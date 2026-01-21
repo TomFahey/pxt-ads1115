@@ -342,8 +342,8 @@ namespace ADS1115 {
         if (selection == comp_latch.Nonlatching) {
             adsclatch = _CLAT_NONLAT
         }
-        else if (selection ==comp_mode.Window) {
-            adsclatch = _CLAT_LAT
+        else if (selection == comp_latch.Window) {
+            adsclatch = _CLAT_LATCH
         }
     }
 
@@ -358,13 +358,13 @@ namespace ADS1115 {
             adscqueue = _CQUE_1CONV
         }
         else if (selection == comp_queue.TwoConversions) {
-            adsqueue = _CQUE_2CONV
+            adscqueue = _CQUE_2CONV
         }
         else if (selection == comp_queue.FourConversions) {
-            adsqueue = _CQUE_4CONV
+            adscqueue = _CQUE_4CONV
         }
         else if (selection == comp_queue.Disable) {
-            adsqueue = _CQUE_NONE
+            adscqueue = _CQUE_NONE
         }
     }
 
