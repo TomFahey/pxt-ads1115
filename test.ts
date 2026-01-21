@@ -9,6 +9,10 @@ ADS1115.initADS1115(userInI2C.Gnd)
 ADS1115.setMode(mode.Multi)
 ADS1115.setGain(gain.One)
 ADS1115.setRate(rate.Rate5)
+ADS1115.setCompMode(comp_mode.Traditional)
+ADS1115.setCompLatch(comp_latch.Nonlatching)
+ADS1115.setCompQueue(comp_queue.OneConversion)
+
 
 // The other lines, which run infinitely, show the following two capabilities:
 // 1. The ability to read any channel of the ADS1115 between 0 and 7 and then return the raw value.
