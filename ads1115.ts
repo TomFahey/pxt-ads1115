@@ -213,8 +213,6 @@ namespace ADS1115 {
     let adscmode = _CMODE_TRAD
     let adsclatch = _CLAT_NONLAT
     let adscqueue = _CQUE_NONE
-    let ads_lo_threshold: number = 0x8000
-    let ads_hi_threshold: number = 0x7FFF 
 
     /**
      * Changing the I2C address based on user input
