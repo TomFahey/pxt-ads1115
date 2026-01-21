@@ -1,3 +1,5 @@
+This fork extends the code found in [pxt-ads1115](https://github.com/joy-it/pxt-ads1115), by including blocks to configure the comparator on the ADS1115.
+
 # MakeCode Package for the ADS1115
 
 This library provides a Microsoft Makecode package for the ADS1115.
