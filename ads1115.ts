@@ -342,7 +342,7 @@ namespace ADS1115 {
         if (selection == comp_latch.Nonlatching) {
             adsclatch = _CLAT_NONLAT
         }
-        else if (selection == comp_latch.Window) {
+        else if (selection == comp_latch.Latching) {
             adsclatch = _CLAT_LATCH
         }
     }
